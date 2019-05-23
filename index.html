@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Presentation - PoC PWA</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/sky.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
@@ -25,17 +25,137 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<!-- <section>Slide 1</section>
+				<section>Slide 2</section> -->
+				<section class="cover">
+					<h3>Proof of Concept</h3>
+					<h2>Progressive Web App</h2>
+					<p>By Hui Yee Tan</p>
+				</section>
+
+				<section class="overview">
+					<section class="introduction">
+						<h3>Progressive Web App (PWA)</h3>
+						<ul>
+							<li>Use modern web capabilities to deliver fast, engaging and reliable mobile web experience</li>
+							<li>Neutral to most operating system but dependent to the browser used as it is website based</li>
+						</ul>
+					</section>
+					<section class="features">
+						<h3>Features</h3>
+						<ul>
+							<li class="fragment">Work Offline</li>	<!--<span class="fragments"></span>-->
+							<li class="fragment">Response relatively faster by serving pages from cache storage</li>
+							<li class="fragment">Use device features such as Microphone, Camera, Location and Background Sync</li>
+							<li class="fragment">Send notifications to subscribers</li>
+						</ul>
+						<aside class="notes">
+							introduce service worker first next page before running the demo part
+						</aside>
+					</section>
+				</section>
+
+				<section class="serviceworker">
+					<section data-transition="convex">
+						<h3>Introducing Service Worker</h3>
+						<img width="1206" height="250" data-src="./img/downasaur.PNG" alt="downasaur page">
+					</section>
+					<section data-transition="convex">
+						<h3>Service Worker</h3>
+						<ul>
+							<li>Service Worker manages how network requests from and to your application are handled</li>
+							<li>Runs separately from main browser thread in the background, and independent to your web application</li>
+							<li>Enhance user experience</li>
+						</ul>	
+						<aside class="notes">
+							An extra layer between your app and server, and preprocessing the data from app and server before sending to their destination
+							<ul>
+								<li>
+										For example, provide a fallback page or display if user went offline and the destination page is not cached. 
+										return a mock response if user went offline as you only want to show live data, but you don't want the page to go downasaur 
+								</li>
+								<li>
+									Remember to provide fallback options for browsers that does not support serviceworker or features provided
+									e.g. polyfills
+								</li>
+								<li>
+										Show both demo to audience. First two show using hesta website served from local. Last two use my poc website.
+										Remember to subscribe first. then perform location, camera and backgroundsync accordingly
+								</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section data-transition="convex" class="sw-lifecycle">
+						<img width="500px" height="500px" data-src="./img/sw-lifecycle.png" alt="serviceworker lifecycle">
+						<p>Lifecycle of the service worker</p>
+						<aside class="notes">
+							<ul>
+								<li>install - add static pages to cache</li>
+								<li>activated - until this step is performed, the sw will not control the web app</li>
+								<li>idle - if the sw is not in use (e.g user didn't use the app to perform any action)</li>
+								<li>fetch - when network request is made from the app</li>
+								<li>terminated - save memory</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<section data-transition="slide" class="business-benefits">
+					<h3>Business Benefits of PWA</h3>
+					<ol>
+						<li>Enhance user experience</li>
+						<li>Reduce network traffic from and to the server</li>
+						<li>App can be installed by user, and hence increases user interactions</li>
+					</ol>
+					<aside>background sync, notification</aside>
+				</section>
+
+				<section data-transition="convex">
+					<section class="limitations">
+						<h3>Limitations</h3>
+						<ol>
+							<li>
+								Service worker will only be ready after the first page first loads.
+							</li>
+							<li>
+								Service worker will be in terminated state when it is not in used. 
+							</li>
+							<li>IndexedDB and localStorage has size limits</li>
+							<li>Only runs over HTTPS or localhost to prevent man-in-the-middle attack</li>
+						</ol>
+						<aside class="notes">
+							<ul>
+								Any data that receives before activation will not be cached unless specifically handled.
+								<li>Installation - Precache static files</li>
+								<li>Activation - After the service worker takes control of the application</li>
+								<br/>
+								We cannot rely on the app's global state persisting between events.
+								(Workaround: use IndexedDB)
+							</ul>
+							consider to cache the files that is important only (static files)
+						</aside>
+					</section>
+					<section class="challenges">
+						<h3>Challenges</h3>
+						<aside class="notes">
+							<ul>
+								<li>Hard to write test that reflects the real behaviour of browsers. Introduce Lighthouse</li>
+								<li>Webpack Configuration and Project Compilation takes a lot of my time (new to webpack)</li>
+								<li>Typescript - sw needs different tsconfig.json file as its library has conflicts with DOM library</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="fade" class="end">
+						<img width="1200" height="650" data-src="./img/thank-you.png">
+					</section>
+				</section>
 			</div>
 		</div>
 
 		<script src="js/reveal.js"></script>
 
 		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
