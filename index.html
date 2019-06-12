@@ -25,8 +25,6 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<!-- <section>Slide 1</section>
-				<section>Slide 2</section> -->
 				<section class="cover">
 					<h3>Proof of Concept</h3>
 					<h2>Progressive Web App</h2>
@@ -39,6 +37,7 @@
 						<ul>
 							<li>Use modern web capabilities to deliver fast, engaging and reliable mobile web experience</li>
 							<li>Neutral to most operating system but dependent to the browser used as it is website based</li>
+							<li>Only runs over HTTPS or localhost to prevent man-in-the-middle attack</li>
 						</ul>
 					</section>
 					<section class="features">
@@ -50,7 +49,7 @@
 							<li class="fragment">Send notifications to subscribers</li>
 						</ul>
 						<aside class="notes">
-							introduce service worker first next page before running the demo part
+							after this page will introduce service worker before running the demo part
 						</aside>
 					</section>
 				</section>
@@ -79,8 +78,12 @@
 									e.g. polyfills
 								</li>
 								<li>
-										Show both demo to audience. First two show using hesta website served from local. Last two use my poc website.
-										Remember to subscribe first. then perform location, camera and backgroundsync accordingly
+									Show both demo to audience. 
+									<ul>
+										<li>`work offline and response faster' using hesta website served from local.</li>
+										<li>Remember to subscribe first. then perform location, camera and backgroundsync accordingly</li>
+										<li>`Subscribe, Location & Background Sync` use my poc website.</li>
+									</ul>
 								</li>
 							</ul>
 						</aside>
@@ -99,6 +102,28 @@
 							</ul>
 						</aside>
 					</section>
+
+					<section data-transition="convex" class="serving-strategies">
+						<h3>Example of Serving strategies</h3>
+						<ol>
+							<li>Cache, falling back to network</li>
+							<li>Network, falling back to cache</li>
+							<li>Cache & network race</li>
+							<li>Cache then network</li>
+							<li>Generic fallback</li>
+						</ol>
+						<aside class="notes">
+							<p>handle different request differently (filter by request origin, method etc)</p>
+							<p>if there is no match from the cache, fetch it from the network</p>
+							<ol>
+								<li>good for static UI</li>
+								<li>use this for data</li>
+								<li>ideal for small assets where you're chasing performance on devices with slow disk access</li>
+								<li>use this for data if you want performance</li>
+								<li>offline page</li>
+						</ol>
+						</aside>
+					</section>
 				</section>
 
 				<section data-transition="slide" class="business-benefits">
@@ -108,21 +133,19 @@
 						<li>Reduce network traffic from and to the server</li>
 						<li>App can be installed by user, and hence increases user interactions</li>
 					</ol>
-					<aside>background sync, notification</aside>
+					<aside class="notes">
+						background sync, notification
+					</aside>
 				</section>
 
 				<section>
 					<section class="limitations" data-transition="convex">
 						<h3>Limitations</h3>
 						<ol>
-							<li>
-								Service worker will only be ready after the first page first loads.
-							</li>
-							<li>
-								Service worker will be in terminated state when it is not in used. 
-							</li>
+							<li>You hardly knows if the installation of serviceworker fails unless you go to application tab in dev tools</li>
+							<li>PWA cannot access many features on devices</li>
+							<li>Cannot rely on the app's global state persisting between events</li>
 							<li>IndexedDB and localStorage has size limits</li>
-							<li>Only runs over HTTPS or localhost to prevent man-in-the-middle attack</li>
 						</ol>
 						<aside class="notes">
 							<ul>
@@ -130,11 +153,14 @@
 								<li>Installation - Precache static files</li>
 								<li>Activation - After the service worker takes control of the application</li>
 								<br/>
-								We cannot rely on the app's global state persisting between events.
 								(Workaround: use IndexedDB)
 							</ul>
 							consider to cache the files that is important only (static files)
 						</aside>
+					</section>
+					<section class="storageLimits" data-transition="convex">
+						<h3>Storage Limits</h3>
+						<img width="855px" height="233px" data-src="./img/cacheStorageLimits.PNG" alt="caches storage limits">
 					</section>
 					<section class="challenges" data-transition="convex">
 						<h3>Challenges</h3>
