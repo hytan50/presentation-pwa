@@ -46,12 +46,19 @@
 							<li class="fragment">Work Offline</li>	<!--<span class="fragments"></span>-->
 							<li class="fragment">Response relatively faster by serving pages from cache storage</li>
 							<li class="fragment">Use device features such as Microphone, Camera, Location and Background Sync</li>
-							<li class="fragment">Send notifications to subscribers</li>
+							<li class="fragment">Send notifications to subscribers (not supported by iOS)</li>
 						</ul>
 						<aside class="notes">
-							after this page will introduce service worker before running the demo part
+							after this page will introduce service worker before running the demo part.
+							<p>Background Sync are not supported by standalone PWA in iOS</p>
 						</aside>
 					</section>
+				</section>
+
+				<section class="manifest" data-transition="convex">
+					<h3>Web App Manifest</h3>
+					<p>A simple JSON file that tells the browser about your web application and how it should behave when installed</p>
+					<img width="284" height="350" data-src="./img/manifest.PNG" alt="example of manifest">
 				</section>
 
 				<section class="serviceworker">
